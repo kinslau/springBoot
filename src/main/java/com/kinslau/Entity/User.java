@@ -14,15 +14,16 @@ public class User implements Serializable {
     private String userName;
 
 
-    public String getRedisKey() {
-        return redisKey;
+    public String getFiled() {
+        return filed;
     }
 
-    public void setRedisKey(String redisKey) {
-        this.redisKey = redisKey;
+    public void setFiled(String filed) {
+        this.filed = filed;
     }
 
-    private String redisKey;
+    private String filed;
+
 
     public String getUserName() {
         return userName;
@@ -44,15 +45,20 @@ public class User implements Serializable {
 
 
 
-    public  User(String userName,Integer age,String redisKey){
+    public  User(String userName,Integer age,String filed){
         this.userName = userName;
         this.age = age;
-        this.redisKey = redisKey;
+        this.filed = filed;
+    }
+
+
+    public User(){
+        super();
     }
 
 
     @Override
     public String toString() {
-        return "User Redis key:"+redisKey+" userName: "+userName + " age: "+age;
+        return "User Redis field:"+filed+" userName: "+userName + " age: "+age;
     }
 }

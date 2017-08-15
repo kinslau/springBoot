@@ -28,40 +28,45 @@ public abstract class RedisService<T> {
     HashOperations<String,String,T>  hashOperations;
 
 
-    abstract String getRedisKey();
+     public abstract String getRedisKey(String redisKey);
 
 
-    public void put(String key,T domain,long expire){
+    public void put(String redisKey,String field,T domain,long expire){
 
-        hashOperations.put(getRedisKey(),key,domain);
+        hashOperations.put(redisKey,field,domain);
         if (expire != -1){
-            redisTemplate.expire(getRedisKey(),expire,TimeUnit.SECONDS.SECONDS);
+            redisTemplate.expire(redisKey,expire,TimeUnit.SECONDS.SECONDS);
         }
     }
 
-    public void remove(String key){
-        hashOperations.delete(getRedisKey(),key);
+    public void remove(String redisKey,String field){
+        hashOperations.delete(redisKey,field);
     }
 
 
-    public T get(String key){
-        return hashOperations.get(getRedisKey(),key);
+    public T get(String redisKey,String field){
+        return hashOperations.get(redisKey,field);
     }
 
-    public List<T> getAll(){
-        return hashOperations.values(getRedisKey());
+    public List<T> getAll(String redisKey){
+        return hashOperations.values(redisKey);
     }
 
-    public boolean isKeyExists(String key){
-        return hashOperations.hasKey(getRedisKey(),key);
+    public boolean isKeyExists(String redisKey,String field){
+        return hashOperations.hasKey(redisKey,field);
     }
 
-    public long count(){
-        return hashOperations.size(getRedisKey());
+    public long count(String redisKey){
+        return hashOperations.size(redisKey);
     }
 
-    public void empty(){
-        Set<String> set = hashOperations.keys(getRedisKey());
-        set.stream().forEach(key -> hashOperations.delete(getRedisKey(),key));
+    public void empty(String redisKey){
+        Set<String> set = hashOperations.keys(redisKey);
+        set.stream().forEach(field -> hashOperations.delete(redisKey,field));
+    }
+
+
+    public Set<String> getKeys(String redisKey) {
+        return hashOperations.keys(redisKey);
     }
 }

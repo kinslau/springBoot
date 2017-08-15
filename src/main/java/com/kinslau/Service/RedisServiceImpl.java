@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class RedisServiceImpl extends RedisService<User> {
-    private static final String REDIS_KEY = "test";
+public class RedisServiceImpl extends RedisService<Object> {
 
 
     @Override
-     public String getRedisKey() {
-        return this.REDIS_KEY;
+    public String getRedisKey(String redisKey) {
+        return redisKey;
     }
 }
